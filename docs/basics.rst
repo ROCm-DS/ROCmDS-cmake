@@ -14,7 +14,7 @@ via CMake's `FetchContent <https://cmake.org/cmake/help/latest/module/FetchConte
   cmake_minimum_required(...)
 
   if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/<PROJ>_RAPIDS.cmake)
-    file(DOWNLOAD https://raw.githubusercontent.com/rapidsai/rapids-cmake/branch-25.02/RAPIDS.cmake
+    file(DOWNLOAD https://raw.githubusercontent.com/ROCm/ROCmDS-cmake/branch-2.0.0/RAPIDS.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/<PROJ>_RAPIDS.cmake)
   endif()
   include(${CMAKE_CURRENT_BINARY_DIR}/<PROJ>_RAPIDS.cmake)
@@ -25,6 +25,8 @@ via CMake's `FetchContent <https://cmake.org/cmake/help/latest/module/FetchConte
   include(rapids-find)
 
   project(...)
+
+A rapids-cmake user must authenticate to AMD-AI organization using environment variables GITHUB_USER and GITHUB_PASS. A personnel access token can be used for GITHUB_PASS.
 
 Usage
 *****
@@ -39,6 +41,7 @@ this ``rapids-cmake`` comprises the following primary components:
 - :ref:`export <export>`
 - :ref:`find <find>`
 - :ref:`testing <testing>`
+- :ref:`hip <api.html#hip>`
 
 There are two ways projects can use ``rapids-cmake`` functions.
 
@@ -83,7 +86,7 @@ At times projects or developers will need to verify ``rapids-cmake`` branches. T
   #
   set(rapids-cmake-fetch-via-git "ON")
 
-  file(DOWNLOAD https://raw.githubusercontent.com/rapidsai/rapids-cmake/branch-25.02/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm/ROCmDS-cmake/branch-2.0.0/RAPIDS.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/RAPIDS.cmake)
   include(${CMAKE_CURRENT_BINARY_DIR}/RAPIDS.cmake)
 

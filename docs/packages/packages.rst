@@ -13,3 +13,7 @@
    /packages/rapids_cpm_nvtx3
    /packages/rapids_cpm_rmm
    /packages/rapids_cpm_spdlog
+   /packages/rapids_cpm_hipco
+   /packages/rapids_cpm_hipbench
+   /packages/rapids_cpm_hipcomp
+   /packages/rapids_cpm_hiprmm

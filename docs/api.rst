@@ -100,6 +100,21 @@ require.
     rapids_cuda_set_architectures [Advanced] </command/rapids_cuda_set_architectures>
 
 
+.. _`hip`:
+
+HIP
+***
+
+The `rapids_hip` functions provide common CMake HIP logic for AMD GPU based projects.
+
+.. toctree::
+   :titlesonly:
+
+    rapids_hip_init_architectures </command/rapids_hip_init_architectures>
+    rapids_hip_init_runtime </command/rapids_hip_init_runtime>
+    rapids_hip_patch_toolkit </command/rapids_hip_patch_toolkit>
+    rapids_hip_set_architectures [Advanced] </command/rapids_hip_set_architectures>
+
 .. _`export`:
 
 Export Set Generation
