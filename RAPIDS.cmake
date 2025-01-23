@@ -1,5 +1,5 @@
 #=============================================================================
-# Copyright (c) 2021-2024, NVIDIA CORPORATION.
+# Copyright (c) 2021-2025, NVIDIA CORPORATION.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ if(NOT rapids-cmake-version)
     set(rapids-cmake-version $ENV{RAPIDS_CMAKE_VERSION})
   else()
     # Define a default version if the user doesn't set one
-    set(rapids-cmake-version 25.02)
+    set(rapids-cmake-version 25.04)
   endif()
 endif()
 

@@ -14,7 +14,7 @@ via CMake's `FetchContent <https://cmake.org/cmake/help/latest/module/FetchConte
   cmake_minimum_required(...)
 
   if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/<PROJ>_RAPIDS.cmake)
-    file(DOWNLOAD https://raw.githubusercontent.com/ROCm/ROCmDS-cmake/branch-2.0.0/RAPIDS.cmake
+    file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-cmake/release/rocmds-25.10/RAPIDS.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/<PROJ>_RAPIDS.cmake)
   endif()
   include(${CMAKE_CURRENT_BINARY_DIR}/<PROJ>_RAPIDS.cmake)
@@ -86,7 +86,7 @@ At times projects or developers will need to verify ``rapids-cmake`` branches. T
   #
   set(rapids-cmake-fetch-via-git "ON")
 
-  file(DOWNLOAD https://raw.githubusercontent.com/ROCm/ROCmDS-cmake/branch-2.0.0/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-cmake/release/rocmds-25.10/RAPIDS.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/RAPIDS.cmake)
   include(${CMAKE_CURRENT_BINARY_DIR}/RAPIDS.cmake)
 
