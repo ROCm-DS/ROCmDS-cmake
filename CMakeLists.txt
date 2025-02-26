@@ -1,5 +1,5 @@
 #=============================================================================
-# Copyright (c) 2021-2024, NVIDIA CORPORATION.
+# Copyright (c) 2021-2025, NVIDIA CORPORATION.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@
 # the caller.
 
 # Enforce the minimum required CMake version for all users
-cmake_minimum_required(VERSION 3.26.4 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.30.4 FATAL_ERROR)
 
 option(RAPIDS_CMAKE_ONLY_CREATE_PACKAGE "Package the `rapids-cmake` subfolder." OFF)
 if (RAPIDS_CMAKE_ONLY_CREATE_PACKAGE)
