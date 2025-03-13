@@ -45,7 +45,7 @@ if(NOT rapids-cmake-version)
     set(rapids-cmake-version $ENV{RAPIDS_CMAKE_VERSION})
   else()
     # Define a default version if the user doesn't set one
-    set(rapids-cmake-version 25.04)
+    set(rapids-cmake-version 25.06)
   endif()
 endif()
 
