@@ -13,9 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #=============================================================================
-#
-# This is the preferred entry point for projects using rapids-cmake
-#
 # MIT License
 #
 # Modifications Copyright (c) 2023-2024 Advanced Micro Devices, Inc.
@@ -38,29 +35,56 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #=============================================================================
+#
+# This is the preferred entry point for projects using rapids-cmake
+#
 
 # Allow users to control which version is used
 if(NOT rapids-cmake-version)
-  # Define a default version if the user doesn't set one
-  set(rapids-cmake-version 25.02)
+  if(DEFINED ENV{RAPIDS_CMAKE_VERSION})
+    set(rapids-cmake-version $ENV{RAPIDS_CMAKE_VERSION})
+  else()
+    # Define a default version if the user doesn't set one
+    set(rapids-cmake-version 25.02)
+  endif()
 endif()
 
 # Allow users to control which GitHub repo is fetched
 if(NOT rapids-cmake-repo)
-  # Define a default repo if the user doesn't set one
-  set(rapids-cmake-repo ROCm/rapids-cmake)
+  if(DEFINED ENV{RAPIDS_CMAKE_REPO})
+    set(rapids-cmake-repo $ENV{RAPIDS_CMAKE_REPO})
+  else()
+    # Define a default repo if the user doesn't set one
+    set(rapids-cmake-repo rocm/rocmds-cmake)
+  endif()
 endif()
 
 # Allow users to control which branch is fetched
 if(NOT rapids-cmake-branch)
-  # Define a default branch if the user doesn't set one
-  set(rapids-cmake-branch "branch-24.06")
+  if(DEFINED ENV{RAPIDS_CMAKE_BRANCH})
+    set(rapids-cmake-branch $ENV{RAPIDS_CMAKE_BRANCH})
+  else()
+    # Define a default branch if the user doesn't set one
+    set(rapids-cmake-branch "branch-2.0.0")
+  endif()
+endif()
+
+if(NOT rapids-cmake-tag AND DEFINED ENV{RAPIDS_CMAKE_TAG})
+  set(rapids-cmake-tag $ENV{RAPIDS_CMAKE_TAG})
+endif()
+
+if(NOT rapids-cmake-sha AND DEFINED ENV{RAPIDS_CMAKE_SHA})
+  set(rapids-cmake-sha $ENV{RAPIDS_CMAKE_SHA})
 endif()
 
 # Allow users to control the exact URL passed to FetchContent
 if(NOT rapids-cmake-url)
-  # Construct a default URL if the user doesn't set one
-  set(rapids-cmake-url "https://github.com/${rapids-cmake-repo}/")
+  if(DEFINED ENV{RAPIDS_CMAKE_URL})
+    set(rapids-cmake-url "$ENV{RAPIDS_CMAKE_URL}/")
+  else()
+    # Construct a default URL if the user doesn't set one
+    set(rapids-cmake-url "https://github.com/${rapids-cmake-repo}/")
+  endif()
   # In order of specificity
   if(rapids-cmake-fetch-via-git)
     if(rapids-cmake-sha)
