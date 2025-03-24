@@ -69,10 +69,10 @@ function(rapids_cpm_rocmds_logger)
     rapids_cpm_package_details("rocmds_logger" version repository tag shallow exclude) # NOTE: rocmds_logger is versions.json key
 
     include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-    rapids_cpm_generate_patch_command("rocmds_logger" ${version} patch_command) # NOTE: rocmds_logger is versions.json key
+    rapids_cpm_generate_patch_command("rocmds_logger" ${version} patch_command build_patch_only) # NOTE: rocmds_logger is versions.json key
 
     include("${rapids-cmake-dir}/cpm/find.cmake")
-    rapids_cpm_find(rapids_logger ${version} ${ARGN} # NOTE: rapids_logger is CMake project/package name
+    rapids_cpm_find(rapids_logger ${version} ${ARGN} ${build_patch_only} # NOTE: rapids_logger is CMake project/package name
             CPM_ARGS
             GIT_REPOSITORY ${repository}
             GIT_TAG ${tag}

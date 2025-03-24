@@ -179,7 +179,7 @@ function(rapids_cpm_nvcomp)
   endif()
 
   include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(nvcomp ${version} patch_command)
+  rapids_cpm_generate_patch_command(nvcomp ${version} patch_command build_patch_only)
 
   # Apply any patch commands to the proprietary binary
   if(nvcomp_proprietary_binary AND patch_command)
@@ -187,7 +187,7 @@ function(rapids_cpm_nvcomp)
   endif()
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(nvcomp ${version} ${_RAPIDS_UNPARSED_ARGUMENTS}
+  rapids_cpm_find(nvcomp ${version} ${_RAPIDS_UNPARSED_ARGUMENTS} ${build_patch_only}
                   GLOBAL_TARGETS nvcomp::nvcomp
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}

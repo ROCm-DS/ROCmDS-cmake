@@ -117,13 +117,13 @@ function(rapids_cpm_hipco)
   endif()
 
   include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(hipco ${version} patch_command)
+  rapids_cpm_generate_patch_command(hipco ${version} patch_command build_patch_only)
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
 
   # TODO(HIP/AMD): WAR for older hipCo versions where the project name is hipCo.
   # To be removed in the future when support for older hipCo versions is no longer needed.
-  rapids_cpm_find(${hipco_package_name} ${version} ${_RAPIDS_UNPARSED_ARGUMENTS}
+  rapids_cpm_find(${hipco_package_name} ${version} ${_RAPIDS_UNPARSED_ARGUMENTS} ${build_patch_only}
                   GLOBAL_TARGETS hipco::hipco cuco::cuco
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}

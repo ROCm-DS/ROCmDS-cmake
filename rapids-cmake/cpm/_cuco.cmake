@@ -72,10 +72,10 @@ function(rapids_cpm_cuco)
   endif()
 
   include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(cuco ${version} patch_command)
+  rapids_cpm_generate_patch_command(cuco ${version} patch_command build_patch_only)
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(cuco ${version} ${_RAPIDS_UNPARSED_ARGUMENTS}
+  rapids_cpm_find(cuco ${version} ${_RAPIDS_UNPARSED_ARGUMENTS} ${build_patch_only}
                   GLOBAL_TARGETS cuco::cuco
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}

@@ -114,10 +114,10 @@ function(rapids_cpm_hipbench)
   #: endif()
 
   include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(hipbench ${version} patch_command)
+  rapids_cpm_generate_patch_command(hipbench ${version} patch_command build_patch_only)
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(nvbench ${version} ${ARGN}
+  rapids_cpm_find(nvbench ${version} ${ARGN} ${build_patch_only}
                   GLOBAL_TARGETS nvbench::nvbench nvbench::main
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}

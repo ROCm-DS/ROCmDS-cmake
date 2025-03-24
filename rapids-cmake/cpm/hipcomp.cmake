@@ -135,7 +135,7 @@ function(rapids_cpm_hipcomp)
   endif()
 
   include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(hipcomp ${version} patch_command)
+  rapids_cpm_generate_patch_command(hipcomp ${version} patch_command build_patch_only)
 
   # Apply any patch commands to the proprietary binary
   if(hipcomp_proprietary_binary AND patch_command)
@@ -151,7 +151,7 @@ function(rapids_cpm_hipcomp)
   if(DEFINED _RAPIDS_BUILD_STATIC) # overrules environment variable
     set(BUILD_STATIC ${_RAPIDS_BUILD_STATIC})
   endif()
-  rapids_cpm_find(hipcomp ${version} ${_RAPIDS_UNPARSED_ARGUMENTS}
+  rapids_cpm_find(hipcomp ${version} ${_RAPIDS_UNPARSED_ARGUMENTS} ${build_patch_only}
                   GLOBAL_TARGETS hipcomp::hipcomp
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}
