@@ -69,12 +69,15 @@ if (RAPIDS_CMAKE_ONLY_CREATE_PACKAGE)
   set(CPACK_PACKAGE_NAME "rocmds-cmake-${RAPIDS_CMAKE_DEVEL_PACKAGE_SUFFIX}" CACHE STRING "Overwrite package name.")
 
   set(rapids-cmake-dir "${CMAKE_CURRENT_LIST_DIR}/rapids-cmake")
+  set(install_prefix share/cmake/rocmds-cmake)
 
-  install(DIRECTORY ${rapids-cmake-dir} DESTINATION share/cmake
+  install(FILES init.cmake DESTINATION ${install_prefix})
+  install(DIRECTORY ${rapids-cmake-dir}/ DESTINATION ${install_prefix}/modules
           PATTERN "rapids-cmake/rapids-cmake.cmake" EXCLUDE)
 
   # Make `include(rapids-cmake)` entry point for configuring ROCm-DS CMake correctly
   # when using it via module path.
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/_prepare)
   set(modified-rapids-cmake-file ${CMAKE_CURRENT_BINARY_DIR}/_prepare/rapids-cmake.cmake)
   file(COPY_FILE ${rapids-cmake-dir}/rapids-cmake.cmake ${modified-rapids-cmake-file})
   file(APPEND ${modified-rapids-cmake-file}
@@ -84,7 +87,7 @@ set(RAPIDS_CMAKE_FROM_MODULE_PATH ON)
 set(rapids-cmake-dir ${CMAKE_CURRENT_LIST_DIR})
        ]=])
   install(FILES ${modified-rapids-cmake-file}
-          DESTINATION share/cmake/rapids-cmake)
+          DESTINATION ${install_prefix}/modules)
 
   set(CPACK_PACKAGE_VENDOR "Advanced Micro Devices, Inc.")
   set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_VENDOR}")
