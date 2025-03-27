@@ -48,7 +48,7 @@
 #
 # Build ROCMmDS-CMake package:
 #
-# The option ONLY_CREATE_PACKAGE will install (directly or via package install)
+# The option RAPIDS_CMAKE_ONLY_CREATE_PACKAGE will install (directly or via package install)
 # a version of rapids-cmake/rapids-cmake.cmake that sets `rapids-cmake-dir` if
 # included via `include(rapids-cmake)`. The latter requires that the installed
 # `rapids-cmake` subfolder is in the CMAKE_MODULE_PATH, which must be done by
@@ -57,8 +57,8 @@
 # Enforce the minimum required CMake version for all users
 cmake_minimum_required(VERSION 3.26.4 FATAL_ERROR)
 
-option(ONLY_CREATE_PACKAGE "Package the `rapids-cmake` subfolder." OFF)
-if (ONLY_CREATE_PACKAGE)
+option(RAPIDS_CMAKE_ONLY_CREATE_PACKAGE "Package the `rapids-cmake` subfolder." OFF)
+if (RAPIDS_CMAKE_ONLY_CREATE_PACKAGE)
   project(rocmds_cmake VERSION 1.0.0)
 
   set(DEFAULT_RAPIDS_CMAKE_DEVEL_PACKAGE_SUFFIX "dev")
