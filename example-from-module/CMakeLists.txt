@@ -1,9 +1,7 @@
 # RUN
 # apt install rocmds-cmake-dev # list installed files: dpkg -L rocmds-cmake-dev
 # mkdir build && cd build
-# cmake ../ -DCMAKE_MODULE_PATH=/opt/rocm-ds/share/cmake/rapids-cmake
-#
-# NOTE: hipbench CMakeLists.txt must support RAPIDS_CMAKE_FROM_MODULE_PATH option.
+# cmake ../ -DCMAKE_MODULE_PATH=<rocm-ds-cmake-modules-path>
 
 cmake_minimum_required(VERSION 3.23.1 FATAL_ERROR)
 
