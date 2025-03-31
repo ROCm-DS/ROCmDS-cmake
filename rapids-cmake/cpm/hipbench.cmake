@@ -122,8 +122,7 @@ function(rapids_cpm_hipbench)
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}
                   GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow}
-                  PATCH_COMMAND ${patch_command}
+                  GIT_SHALLOW ${shallow} ${patch_command}
                   EXCLUDE_FROM_ALL ${exclude}
                   OPTIONS "NVBench_ENABLE_NVML ${hipbench_with_nvml}" "NVBench_ENABLE_EXAMPLES OFF"
                           "NVBench_ENABLE_TESTING OFF")
