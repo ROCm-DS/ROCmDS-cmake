@@ -117,7 +117,7 @@ function(rapids_cpm_hipbench)
   rapids_cpm_generate_patch_command(hipbench ${version} patch_command)
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(hipbench ${version} ${ARGN}
+  rapids_cpm_find(nvbench ${version} ${ARGN}
                   GLOBAL_TARGETS nvbench::nvbench nvbench::main
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}
