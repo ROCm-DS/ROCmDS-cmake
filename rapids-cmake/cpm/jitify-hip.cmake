@@ -108,7 +108,13 @@ function(rapids_cpm_jitify_hip)
   rapids_cpm_display_patch_status("jitify-hip")
 
   # Propagate up variables that CPMFindPackage provide
-  set(jitify_SOURCE_DIR "${jitify_SOURCE_DIR}" PARENT_SCOPE)
+  if (NOT "${jitify_SOURCE_DIR}" STREQUAL "")
+    set(jitify_SOURCE_DIR "${jitify_SOURCE_DIR}" PARENT_SCOPE)
+  else()
+    # NOTE: Special case for local package, assumes
+    # that include folder is three directories up.
+    set(jitify_SOURCE_DIR "${jitify_DIR}/../../../include" PARENT_SCOPE)
+  endif()
   set(jitify_BINARY_DIR "${jitify_BINARY_DIR}" PARENT_SCOPE)
   set(jitify_ADDED "${jitify_ADDED}" PARENT_SCOPE)
   set(jitify_VERSION ${version} PARENT_SCOPE)
