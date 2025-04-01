@@ -101,8 +101,7 @@ function(rapids_cpm_jitify_hip)
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}
                   GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow}
-                  PATCH_COMMAND ${patch_command}
+                  GIT_SHALLOW ${shallow} ${patch_command}
                   EXCLUDE_FROM_ALL ${to_exclude})
 
   include("${rapids-cmake-dir}/cpm/detail/display_patch_status.cmake")
