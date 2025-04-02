@@ -156,9 +156,8 @@ function(rapids_cpm_hipcomp)
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}
                   GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow}
+                  GIT_SHALLOW ${shallow} ${patch_command}
                   EXCLUDE_FROM_ALL ${to_exclude}
-                  PATCH_COMMAND ${patch_command}
                   OPTIONS "BUILD_STATIC ${BUILD_STATIC}" "BUILD_TESTS OFF" "BUILD_BENCHMARKS OFF"
                           "BUILD_EXAMPLES OFF")
 

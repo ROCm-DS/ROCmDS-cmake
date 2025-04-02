@@ -128,8 +128,7 @@ function(rapids_cpm_hipco)
                   CPM_ARGS
                   GIT_REPOSITORY ${repository}
                   GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow}
-                  PATCH_COMMAND ${patch_command}
+                  GIT_SHALLOW ${shallow} ${patch_command}
                   EXCLUDE_FROM_ALL ${to_exclude}
                   OPTIONS "BUILD_TESTS OFF" "BUILD_BENCHMARKS OFF" "BUILD_EXAMPLES OFF"
 		  "INSTALL_HIPCO ${to_install}" "INSTALL_CUCO ${to_install}") #NOTE(HIP/AMD): build option INSTALL_HIPCO may be removed in the future.
