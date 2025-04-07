@@ -44,9 +44,16 @@ include(utils/cmake_config_test.cmake)
 include(utils/cmake_ctest_test.cmake)
 include(utils/cmake_build_test.cmake)
 
-option(CUDA_BACKEND "Use the CUDA backend" FALSE)
+option(CUDA_BACKEND "Use the CUDA backend" OFF)
+
+if (CUDA_BACKEND)
+  set(RAPIDS_CMAKE_PLATFORM "cuda")
+else()
+  set(RAPIDS_CMAKE_PLATFORM "hip")
+endif()
 
 add_subdirectory(cmake)
+message(STATUS "RAPIDS_CMAKE_PLATFORM=${RAPIDS_CMAKE_PLATFORM}")
 add_subdirectory(${RAPIDS_CMAKE_PLATFORM})
 add_subdirectory(export)
 add_subdirectory(find)
