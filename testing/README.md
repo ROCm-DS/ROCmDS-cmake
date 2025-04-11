@@ -19,6 +19,11 @@ expected.
    export GITHUB_USER=<github_ubser
    export GITHUB_PASS=<github_pw_or_token>
    ```
+2. Create build folder:
+
+   ```bash
+   mkdir build && cd build
+   ```
 3. Run tests:
 
    1. HIP platform:
@@ -27,7 +32,7 @@ expected.
       export CMAKE_PREFIX_PATH="/opt/rocm/hip/lib/cmake;/opt/rocm/lib/cmake"
       cmake ../
       ```
-   1. CUDA platform:
+   1. CUDA platform (WARNING: may break, not regularly tested):
 
       ```bash
       cmake ../ -DCUDA_BACKEND=ON
