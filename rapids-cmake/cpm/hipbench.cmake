@@ -128,7 +128,10 @@ function(rapids_cpm_hipbench)
                           "NVBench_ENABLE_TESTING OFF")
 
   #: NOTE(HIP/AMD): also provide hip-prefixed targets
-  if (NOT TARGET hipbench::hipbench)
+  #: NOTE(HIP/AMD): The download tests (see testing/CMakeLists.txt and testing/utils/fillcache/CMakeLists.txt)
+  #:                may pass the CPM option DOWNLOAD_ONLY ON. In this case, none of the
+  #:                nvbench:: targets  exist.
+  if (TARGET nvbench::nvbench AND NOT TARGET hipbench::hipbench)
     get_target_property(nvbench_orig nvbench::nvbench ALIASED_TARGET)
     if(nvbench_orig)
       add_library(hipbench::hipbench ALIAS ${nvbench_orig})
@@ -136,7 +139,7 @@ function(rapids_cpm_hipbench)
       add_library(hipbench::hipbench ALIAS nvbench::nvbench)
     endif()
   endif()
-  if (NOT TARGET hipbench::main)
+  if (TARGET nvbench::main AND NOT TARGET hipbench::main)
     get_target_property(main_orig nvbench::main ALIASED_TARGET)
     if(main_orig)
       add_library(hipbench::main ALIAS ${main_orig})
