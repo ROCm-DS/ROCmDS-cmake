@@ -135,8 +135,11 @@ function(rapids_cpm_hipco)
 
   # Note: creating the cuco::cuco alias will no longer be required
   # on future hipCo releases
+  #: NOTE(HIP/AMD): The download tests (see testing/CMakeLists.txt and testing/utils/fillcache/CMakeLists.txt)
+  #:                may pass the CPM option DOWNLOAD_ONLY ON. In this case, none of the
+  #:                nvbench:: targets  exist.
   if (HIP_AS_CUDA)
-    if (NOT TARGET cuco::cuco)
+    if (TARGET hipco::hipco AND NOT TARGET cuco::cuco)
       get_property(hipco_orig TARGET hipco::hipco PROPERTY ALIASED_TARGET)
       if ("${hipco_orig}" STREQUAL "")
         add_library(cuco::cuco ALIAS hipco::hipco)
