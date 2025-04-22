@@ -89,6 +89,12 @@ Example on how to properly use :cmake:command:`rapids_hip_init_architectures`:
 # cmake-lint: disable=W0105
 function(rapids_hip_init_architectures project_name)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.hip.init_architectures")
+
+  # allow initializing CMAKE_HIP_ARCHITECTURES via environment variable RAPIDS_CMAKE_HIP_ARCHITECTURES
+  if(DEFINED ENV{RAPIDS_CMAKE_HIP_ARCHITECTURES} AND NOT DEFINED CMAKE_HIP_ARCHITECTURES)
+    set(CMAKE_HIP_ARCHITECTURES $ENV{RAPIDS_CMAKE_HIP_ARCHITECTURES} PARENT_SCOPE)
+  endif()
+
   # If `CMAKE_HIP_ARCHITECTURES` is not defined, build for all supported architectures. If
   # `CMAKE_HIP_ARCHITECTURES` is set to an empty string (""), build for only the current
   # architecture. If `CMAKE_HIP_ARCHITECTURES` is specified by the user, use user setting.
