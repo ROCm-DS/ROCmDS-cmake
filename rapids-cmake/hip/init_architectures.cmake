@@ -128,9 +128,9 @@ function(rapids_hip_init_architectures project_name)
 endfunction()
 
 if (HIP_AS_CUDA)
-  function(rapids_cuda_init_architectures project_name)
+  macro(rapids_cuda_init_architectures project_name)
     rapids_hip_init_architectures(project_name)
     # TODO(HIP/AMD): Check if this is a good idea.
-    set(CMAKE_CUDA_ARCHITECTURES ${CMAKE_HIP_ARCHITECTURES} PARENT_SCOPE)
-  endfunction()
+    set(CMAKE_CUDA_ARCHITECTURES ${CMAKE_HIP_ARCHITECTURES})
+  endmacro()
 endif()

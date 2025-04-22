@@ -64,7 +64,7 @@ when configuring a project. If for some reason your project can't use
 directly.
 
 .. note::
-  
+
    This is automatically called by :cmake:command:`rapids_hip_init_architectures`
 
 .. include:: supported_hip_architectures_values.txt
@@ -79,7 +79,7 @@ Result Variables
 function(rapids_hip_set_architectures mode)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.hip.set_architectures")
 
-  # we limit the ALL=RAPIDS mde to 
+  # we limit the ALL=RAPIDS mde to
   set(supported_archs gfx908 gfx90a gfx940 gfx941 gfx942)
 
   if(${mode} STREQUAL "RAPIDS" OR ${mode} STREQUAL "ALL")
@@ -94,8 +94,8 @@ function(rapids_hip_set_architectures mode)
 endfunction()
 
 if (HIP_AS_CUDA)
-  function(rapids_cuda_set_architectures mode)
+  macro(rapids_cuda_set_architectures mode)
     rapids_hip_set_architectures(mode)
-    set(CMAKE_CUDA_ARCHITECTURES ${CMAKE_HIP_ARCHITECTURES} PARENT_SCOPE)
-  endfunction()
+    set(CMAKE_CUDA_ARCHITECTURES ${CMAKE_HIP_ARCHITECTURES})
+  endmacro()
 endif()
