@@ -90,9 +90,11 @@ Example on how to properly use :cmake:command:`rapids_hip_init_architectures`:
 function(rapids_hip_init_architectures project_name)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.hip.init_architectures")
 
-  # allow initializing CMAKE_HIP_ARCHITECTURES via environment variable RAPIDS_CMAKE_HIP_ARCHITECTURES
+  # Allow initializing CMAKE_HIP_ARCHITECTURES via environment variable RAPIDS_CMAKE_HIP_ARCHITECTURES
+  # NOTE: Variable must be set in current + parent scope.
   if(DEFINED ENV{RAPIDS_CMAKE_HIP_ARCHITECTURES} AND NOT DEFINED CMAKE_HIP_ARCHITECTURES)
-    set(CMAKE_HIP_ARCHITECTURES $ENV{RAPIDS_CMAKE_HIP_ARCHITECTURES} PARENT_SCOPE)
+    set(CMAKE_HIP_ARCHITECTURES $ENV{RAPIDS_CMAKE_HIP_ARCHITECTURES})
+    set(CMAKE_HIP_ARCHITECTURES ${CMAKE_HIP_ARCHITECTURES} PARENT_SCOPE)
   endif()
 
   # If `CMAKE_HIP_ARCHITECTURES` is not defined, build for all supported architectures. If
