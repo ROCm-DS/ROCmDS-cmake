@@ -26,10 +26,7 @@
 > [!CAUTION]
 > This release is an *early-access* software technology preview. Running production workloads is *not* recommended.
 
-> [!NOTE]
-> This repository will be eventually moved to the [ROCm-DS](https://github.com/rocm-ds) Github organization.
-
-<!-- **NOTE:** For the latest stable [README.md](https://github.com/ROCm/ROCmDS-cmake/blob/main/README.md) ensure you are on the default branch. -->
+<!-- **NOTE:** For the latest stable [README.md](https://github.com/ROCm-DS/ROCmDS-cmake/blob/release/1.0.x/README.md) ensure you are on the default branch. -->
 
 ## Overview
 
@@ -51,7 +48,7 @@ Content](https://cmake.org/cmake/help/latest/module/FetchContent.html) into your
 cmake_minimum_required(...)
 
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
-  file(DOWNLOAD https://raw.githubusercontent.com/ROCm/ROCmDS-CMake/branch-<VERSION_MAJOR>.<VERSION_MINOR>/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-CMake/release/<VERSION_MAJOR>.<VERSION_MINOR>.x/RAPIDS.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
 endif()
 include(${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
@@ -71,7 +68,7 @@ your project before the first `project` call. This allows us to offer features s
 
 ## Usage
 
-`rapids-cmake` provides a collection of useful CMake settings that any ROCmDS project may use.
+`rapids-cmake` provides a collection of useful CMake settings that any ROCm-DS project may use.
 While they maybe common, we know that they aren't universal and might need to be composed in
 different ways.
 
@@ -186,7 +183,7 @@ At times projects or developers will need to verify ``rapids-cmake`` branches. T
   #
   set(rapids-cmake-fetch-via-git "ON")
 
-  file(DOWNLOAD https://raw.githubusercontent.com/ROCm/rapids-cmake/branch-23.12/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-CMake/release/1.0.x/RAPIDS.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/RAPIDS.cmake)
   include(${CMAKE_CURRENT_BINARY_DIR}/RAPIDS.cmake)
 ```
@@ -200,4 +197,4 @@ A few notes:
 
 <!-- ## Contributing
 
-Review the [CONTRIBUTING.md](https://github.com/ROCm/rapids-cmake/blob/main/CONTRIBUTING.md) file for information on how to contribute code and issues to the project. -->
+Review the [CONTRIBUTING.md](https://github.com/ROCm-DS/ROCmDS-CMake/blob/release/1.0.x/CONTRIBUTING.md) file for information on how to contribute code and issues to the project. -->
