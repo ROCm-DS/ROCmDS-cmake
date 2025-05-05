@@ -55,7 +55,7 @@ include(${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
 
 include(rapids-cmake)
 include(rapids-cpm)
-include(rapids-cuda)
+include(rapids-hip)
 include(rapids-export)
 include(rapids-find)
 
@@ -100,14 +100,30 @@ For consistency, all targets brought in via `rapids-cpm` are GLOBAL targets.
 - `rapids_cpm_init()` handles initialization of the CPM module.
 - `rapids_cpm_find(<project> name BUILD_EXPORT_SET <name> INSTALL_EXPORT_SET <name>)` Will search for a module and fall back to installing via CPM. Offers support to track dependencies for easy package exporting
 
+### hip
+
+The `rapids-hip` module contains core functionality to allow projects to build HIP code robustly.
+The most commonly used functions are:
+
+- `rapids_hip_init_architectures(<project_name>)` handles initialization of `CMAKE_HIP_ARCHITECTURES`. MUST BE CALLED BEFORE `PROJECT()`
+  - Allows to set `CMAKE_HIP_ARCHITECTURES` via the environment variable `RAPIDS_CMAKE_HIP_ARCHITECTURES` if `CMAKE_HIP_ARCHITECTURES` is undefined.
+  - Synchronizes `CMAKE_HIP_ARCHITECTURES` and variables `GPU_TARGETS` and `AMDGPU_TARGETS` that are frequently used by other ROCm CMake packages.
+- `rapids_hip_init_runtime(<mode>)` handles initialization of `CMAKE_HIP_RUNTIME_LIBRARY`.
+- `rapids_hip_patch_toolkit()` corrects bugs in the HIPToolkit module that are being upstreamed.
+
 ### cuda
 
-The `rapids-cuda` module contains core functionality to allow projects to build CUDA code robustly.
-The most commonly used function are:
+The `rapids-cuda` module contains core functionality to allow projects to build CUDA and HIP code robustly (controlled via `CUDA_BACKEND` option).
+The most commonly used functions are:
 
-- `rapids_cuda_init_architectures(<project_name>)` handles initialization of `CMAKE_CUDA_ARCHITECTURE`. MUST BE CALLED BEFORE `PROJECT()`
+- `rapids_cuda_init_architectures(<project_name>)` handles initialization of `CMAKE_CUDA_ARCHITECTURES`. MUST BE CALLED BEFORE `PROJECT()`
+  - Synchronizes `CMAKE_HIP_ARCHITECTURES` and variable `CMAKE_CUDA_ARCHITECTURES` if the HIP backend is used.
 - `rapids_cuda_init_runtime(<mode>)` handles initialization of `CMAKE_CUDA_RUNTIME_LIBRARY`.
 - `rapids_cuda_patch_toolkit()` corrects bugs in the CUDAToolkit module that are being upstreamed.
+
+> ![NOTE]
+> If the HIP backend is used (the default), the above functions will be delegated to the corresponding `rapids-hip` function.
+> Similar delegation mechanisms are employed by some of the CPM modules in subfolder `rapids-cmake/cpm`.
 
 ### cython
 
