@@ -5,11 +5,8 @@
 
 cmake_minimum_required(VERSION 3.23.1 FATAL_ERROR)
 
-project(MyTestProject VERSION 0.0.0)
-
 include(rapids-cmake)
 include(rapids-cpm)
-# include(rapids-cuda)
 include(rapids-hip)
 include(rapids-export)
 include(rapids-find)
@@ -17,6 +14,8 @@ include(rapids-find)
 message(STATUS "rapids-cmake-dir=${rapids-cmake-dir}")
 
 rapids_hip_init_architectures(MyTestProject)
+
+project(MyTestProject VERSION 0.0.0)
 
 rapids_cpm_init()
 
