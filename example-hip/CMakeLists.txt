@@ -39,7 +39,7 @@
 cmake_minimum_required(VERSION 3.23.1 FATAL_ERROR)
 
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/EXAMPLE_RAPIDS.cmake)
-  file(DOWNLOAD https://raw.githubusercontent.com/ROCm/rapids-cmake/branch-24.06/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-CMake/release/1.0.x/RAPIDS.cmake
        ${CMAKE_CURRENT_BINARY_DIR}/EXAMPLE_RAPIDS.cmake)
 endif()
 include(${CMAKE_CURRENT_BINARY_DIR}/EXAMPLE_RAPIDS.cmake)
