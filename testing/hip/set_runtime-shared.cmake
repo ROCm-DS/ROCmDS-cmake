@@ -1,5 +1,5 @@
 #=============================================================================
-# Copyright (c) 2021, NVIDIA CORPORATION.
+# Copyright (c) 2023-2024, NVIDIA CORPORATION.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #=============================================================================
+
+#=============================================================================
 # MIT License
 #
-# Modifications Copyright (c) 2023-2025 Advanced Micro Devices, Inc.
+# Modifications Copyright (c) 2025 Advanced Micro Devices, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,11 +37,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #=============================================================================
-include_guard(GLOBAL)
 
-option(HIP_AS_CUDA "Provide the same interface as the equivalent CUDA package." TRUE)
+include(${rapids-cmake-dir}/hip/set_runtime.cmake)
 
-include(${CMAKE_CURRENT_LIST_DIR}/hip/init_architectures.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/hip/init_runtime.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/hip/set_architectures.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/hip/set_runtime.cmake)
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/empty.cpp" " ")
+add_library(uses_cuda SHARED ${CMAKE_CURRENT_BINARY_DIR}/empty.cpp)
+rapids_hip_set_runtime(uses_cuda USE_STATIC FALSE)
+
+
+#get_target_property(runtime_state uses_cuda CUDA_RUNTIME_LIBRARY)
+#if( NOT runtime_state STREQUAL "Shared")
+#  message(FATAL_ERROR "rapids_cuda_set_runtime didn't correctly set CUDA_RUNTIME_LIBRARY")
+#endif()
+
+get_target_property(linked_libs uses_cuda LINK_LIBRARIES)
+if(NOT "$<TARGET_NAME_IF_EXISTS:hip::host>" IN_LIST linked_libs)
+  message(FATAL_ERROR "rapids_hip_set_runtime didn't privately link to hip::host")
+endif()
