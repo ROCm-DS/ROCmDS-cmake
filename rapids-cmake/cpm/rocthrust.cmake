@@ -153,8 +153,7 @@ function(rapids_cpm_rocthrust)
                     # FIND_PACKAGE_ARGUMENTS EXACT # we also accept more recent versions
                     GIT_REPOSITORY ${repository}
                     GIT_TAG ${tag}
-                    GIT_SHALLOW ${shallow}
-                    PATCH_COMMAND ${patch_command}
+                    GIT_SHALLOW ${shallow} ${patch_command}
                     EXCLUDE_FROM_ALL ${to_exclude}
                     OPTIONS "DOWNLOAD_ROCPRIM ON")
 
