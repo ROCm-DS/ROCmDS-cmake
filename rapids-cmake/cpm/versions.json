@@ -114,9 +114,9 @@
       "git_tag": "release/0.1.x"
     },
     "rocthrust" : {
-      "version" : "3.0.0",
+      "version" : "4.0.0",
       "git_url" : "https://github.com/ROCm/rocThrust",
-      "git_tag" : "release/rocm-rel-6.0"
+      "git_tag" : "We-always-use-find_package-for-rocthrust."
     },
     "jitify-hip" : {
       "version" : "0.0",
