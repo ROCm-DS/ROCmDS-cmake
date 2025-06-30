@@ -23,6 +23,7 @@
 
 # ROCm-DS CMake
 
+<!-- NOTE: temporary -->
 > [!CAUTION]
 > This release is an *early-access* software technology preview. Running production workloads is *not* recommended.
 
@@ -99,6 +100,12 @@ For consistency, all targets brought in via `rapids-cpm` are GLOBAL targets.
 
 - `rapids_cpm_init()` handles initialization of the CPM module.
 - `rapids_cpm_find(<project> name BUILD_EXPORT_SET <name> INSTALL_EXPORT_SET <name>)` Will search for a module and fall back to installing via CPM. Offers support to track dependencies for easy package exporting
+
+<!-- NOTE: temporary -->
+> [!IMPORTANT]
+> The `rapids-cmake/cpm/versions.json` file currently specifies a ROCm 7.0+ compatible minimum required rocThrust version of 4.0.0.
+> On older ROCm platforms, you will need to override the default config via the `rapids_cpm_package_override(...)` function; see `rapids-cmake/cpm/package_override.cmake`.
+> ROCm 6.* requires a rocThrust version 3+, for example.
 
 ### hip
 
