@@ -57,6 +57,7 @@ function(rapids_hip_detect_architectures possible_archs_var gpu_archs)
   if(NOT EXISTS "${eval_exe}")
     file(WRITE ${eval_file}
          "
+#include <cstring>
 #include <cstdio>
 #include <set>
 #include <string>
