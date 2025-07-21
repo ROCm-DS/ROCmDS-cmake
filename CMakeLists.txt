@@ -59,7 +59,7 @@ cmake_minimum_required(VERSION 3.26.4 FATAL_ERROR)
 
 option(RAPIDS_CMAKE_ONLY_CREATE_PACKAGE "Package the `rapids-cmake` subfolder." OFF)
 if (RAPIDS_CMAKE_ONLY_CREATE_PACKAGE)
-  project(rocmds_cmake VERSION 1.0.0)
+  project(rocmds_cmake VERSION 2.0.0)
 
   set(DEFAULT_RAPIDS_CMAKE_DEVEL_PACKAGE_SUFFIX "dev")
   if (DEFINED ENV{RAPIDS_CMAKE_DEVEL_PACKAGE_SUFFIX})
