@@ -93,24 +93,13 @@ function(rapids_cpm_hipcomp)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.hipcomp")
 
   set(options)
-  set(one_value USE_PROPRIETARY_BINARY BUILD_EXPORT_SET INSTALL_EXPORT_SET BUILD_STATIC)
+  set(one_value USE_PROPRIETARY_BINARY)
   set(multi_value)
   cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
 
-  # Fix up _RAPIDS_UNPARSED_ARGUMENTS to have EXPORT_SETS as this is need for rapids_cpm_find
-  if(_RAPIDS_INSTALL_EXPORT_SET)
-    list(APPEND _RAPIDS_UNPARSED_ARGUMENTS INSTALL_EXPORT_SET ${_RAPIDS_INSTALL_EXPORT_SET})
-  endif()
-  if(_RAPIDS_BUILD_EXPORT_SET)
-    list(APPEND _RAPIDS_UNPARSED_ARGUMENTS BUILD_EXPORT_SET ${_RAPIDS_BUILD_EXPORT_SET})
-  endif()
-
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-  rapids_cpm_package_details(hipcomp version repository tag shallow exclude)
-  set(to_exclude OFF)
-  if(NOT _RAPIDS_INSTALL_EXPORT_SET OR exclude)
-    set(to_exclude ON)
-  endif()
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+  rapids_cpm_package_info(hipcomp ${_RAPIDS_UNPARSED_ARGUMENTS} VERSION_VAR version FIND_VAR
+                          find_args CPM_VAR cpm_find_info TO_INSTALL_VAR to_install)
 
   # first see if we have a proprietary pre-built binary listed in versions.json and it if requested.
   set(hipcomp_proprietary_binary OFF) # will be set to true by rapids_cpm_get_proprietary_binary
@@ -138,7 +127,7 @@ function(rapids_cpm_hipcomp)
   rapids_cpm_generate_patch_command(hipcomp ${version} patch_command build_patch_only)
 
   # Apply any patch commands to the proprietary binary
-  if(hipcomp_proprietary_binary AND patch_command)
+  if(hipcomp_proprietary_binary AND PATCH_COMMAND IN_LIST find_args)
     execute_process(COMMAND ${patch_command} WORKING_DIRECTORY ${hipcomp_ROOT})
   endif()
 
@@ -151,13 +140,9 @@ function(rapids_cpm_hipcomp)
   if(DEFINED _RAPIDS_BUILD_STATIC) # overrules environment variable
     set(BUILD_STATIC ${_RAPIDS_BUILD_STATIC})
   endif()
-  rapids_cpm_find(hipcomp ${version} ${_RAPIDS_UNPARSED_ARGUMENTS} ${build_patch_only}
+  rapids_cpm_find(hipcomp ${version} ${find_args}
                   GLOBAL_TARGETS hipcomp::hipcomp
-                  CPM_ARGS
-                  GIT_REPOSITORY ${repository}
-                  GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow} ${patch_command}
-                  EXCLUDE_FROM_ALL ${to_exclude}
+                  CPM_ARGS ${cpm_find_info}
                   OPTIONS "BUILD_STATIC ${BUILD_STATIC}" "BUILD_TESTS OFF" "BUILD_BENCHMARKS OFF"
                           "BUILD_EXAMPLES OFF")
 
@@ -199,7 +184,7 @@ function(rapids_cpm_hipcomp)
   # Set up up install rules when using the proprietary_binary. When building from source, hipcomp
   # will set the correct install rules
   include("${rapids-cmake-dir}/export/find_package_root.cmake")
-  if(NOT to_exclude AND hipcomp_proprietary_binary)
+  if(to_install AND hipcomp_proprietary_binary)
     include(GNUInstallDirs)
     install(DIRECTORY "${hipcomp_ROOT}/lib/" DESTINATION lib)
     install(DIRECTORY "${hipcomp_ROOT}/include/" DESTINATION include)

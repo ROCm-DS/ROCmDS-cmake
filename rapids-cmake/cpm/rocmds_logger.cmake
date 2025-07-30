@@ -65,19 +65,16 @@ Result Targets
 function(rapids_cpm_rocmds_logger)
     list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.rapids_logger")
 
-    include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-    rapids_cpm_package_details("rocmds_logger" version repository tag shallow exclude) # NOTE: rocmds_logger is versions.json key
+    include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+    rapids_cpm_package_info(rocmds_logger ${ARGN} VERSION_VAR version FIND_VAR find_args CPM_VAR
+                            cpm_find_info TO_INSTALL_VAR to_install) # NOTE: rocmds_logger is versions.json key
 
     include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
     rapids_cpm_generate_patch_command("rocmds_logger" ${version} patch_command build_patch_only) # NOTE: rocmds_logger is versions.json key
 
     include("${rapids-cmake-dir}/cpm/find.cmake")
-    rapids_cpm_find(rapids_logger ${version} ${ARGN} ${build_patch_only} # NOTE: rapids_logger is CMake project/package name
-            CPM_ARGS
-            GIT_REPOSITORY ${repository}
-            GIT_TAG ${tag}
-            GIT_SHALLOW ${shallow} ${patch_command}
-            OPTIONS "BUILD_TESTS OFF")
+    rapids_cpm_find(rapids_logger ${version} ${find_args} CPM_ARGS ${cpm_find_info} # NOTE: rapids_logger is CMake project/package name
+                    OPTIONS "BUILD_TESTS OFF")
 
     include("${rapids-cmake-dir}/cpm/detail/display_patch_status.cmake")
     rapids_cpm_display_patch_status(logger)

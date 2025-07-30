@@ -96,14 +96,16 @@ Result Variables
 function(rapids_cpm_hipbench)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.hipbench")
 
-  set(to_install FALSE)
-  if(INSTALL_EXPORT_SET IN_LIST ARGN)
-    message(FATAL_ERROR "hipbench doesn't provide install rules.
-            It can't be part of an INSTALL_EXPORT_SET")
+  set(build_shared ON)
+  if(BUILD_STATIC IN_LIST ARGN)
+    set(build_shared OFF)
+    set(CPM_DOWNLOAD_hipbench ON) # Since we need static we build from source
+    set(CPM_DOWNLOAD_fmt ON) # Make sure we don't link to a preexisting shared fmt
   endif()
 
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-  rapids_cpm_package_details(hipbench version repository tag shallow exclude)
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+  rapids_cpm_package_info(hipbench ${ARGN} VERSION_VAR version FIND_VAR find_args CPM_VAR
+                          cpm_find_info TO_INSTALL_VAR to_install)
 
   # CUDA::nvml is an optional package and might not be installed ( aka conda )
   #: find_package(CUDAToolkit REQUIRED)
@@ -113,19 +115,16 @@ function(rapids_cpm_hipbench)
   #:   set(hipbench_with_nvml "ON")
   #: endif()
 
-  include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(hipbench ${version} patch_command build_patch_only)
-
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(nvbench ${version} ${ARGN} ${build_patch_only}
+  rapids_cpm_find(nvbench ${version} ${find_args}
                   GLOBAL_TARGETS nvbench::nvbench nvbench::main
-                  CPM_ARGS
-                  GIT_REPOSITORY ${repository}
-                  GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow} ${patch_command}
-                  EXCLUDE_FROM_ALL ${exclude}
-                  OPTIONS "NVBench_ENABLE_NVML ${hipbench_with_nvml}" "NVBench_ENABLE_EXAMPLES OFF"
-                          "NVBench_ENABLE_TESTING OFF")
+                  CPM_ARGS ${cpm_find_info}
+                  OPTIONS "NVBench_ENABLE_NVML ${hipbench_with_nvml}"
+                          "NVBench_ENABLE_CUPTI OFF"
+                          "NVBench_ENABLE_EXAMPLES OFF"
+                          "NVBench_ENABLE_TESTING OFF"
+                          "NVBench_ENABLE_INSTALL_RULES ${to_install}"
+                          "BUILD_SHARED_LIBS ${build_shared}")
 
   #: NOTE(HIP/AMD): also provide hip-prefixed targets
   #: NOTE(HIP/AMD): The download tests (see testing/CMakeLists.txt and testing/utils/fillcache/CMakeLists.txt)

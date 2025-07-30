@@ -90,9 +90,13 @@ function(rapids_cpm_hipco)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.hipco")
 
   set(options)
-  set(one_value INSTALL_EXPORT_SET PACKAGE_NAME)
+  set(one_value PACKAGE_NAME)
   set(multi_value)
   cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
+
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+  rapids_cpm_package_info(hipco ${_RAPIDS_UNPARSED_ARGUMENTS} VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_find_info
+                          TO_INSTALL_VAR to_install)
 
   # Set PACKAGE_NAME to 'cuco' if not provided
   if(NOT _RAPIDS_PACKAGE_NAME)
@@ -101,35 +105,13 @@ function(rapids_cpm_hipco)
     set(hipco_package_name ${_RAPIDS_PACKAGE_NAME})
   endif()
 
-  # Fix up _RAPIDS_UNPARSED_ARGUMENTS to have INSTALL_EXPORT_SET as this is need for rapids_cpm_find
-  set(to_install OFF)
-  if(_RAPIDS_INSTALL_EXPORT_SET)
-    list(APPEND _RAPIDS_UNPARSED_ARGUMENTS INSTALL_EXPORT_SET ${_RAPIDS_INSTALL_EXPORT_SET})
-    set(to_install ON)
-  endif()
-
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-  rapids_cpm_package_details(hipco version repository tag shallow exclude)
-
-  set(to_exclude OFF)
-  if(NOT to_install OR exclude)
-    set(to_exclude ON)
-  endif()
-
-  include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(hipco ${version} patch_command build_patch_only)
-
   include("${rapids-cmake-dir}/cpm/find.cmake")
 
   # TODO(HIP/AMD): WAR for older hipCo versions where the project name is hipCo.
   # To be removed in the future when support for older hipCo versions is no longer needed.
-  rapids_cpm_find(${hipco_package_name} ${version} ${_RAPIDS_UNPARSED_ARGUMENTS} ${build_patch_only}
+  rapids_cpm_find(${hipco_package_name} ${version} ${find_args}
                   GLOBAL_TARGETS hipco::hipco cuco::cuco
-                  CPM_ARGS
-                  GIT_REPOSITORY ${repository}
-                  GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow} ${patch_command}
-                  EXCLUDE_FROM_ALL ${to_exclude}
+                  CPM_ARGS ${cpm_find_info}
                   OPTIONS "BUILD_TESTS OFF" "BUILD_BENCHMARKS OFF" "BUILD_EXAMPLES OFF"
 		  "INSTALL_HIPCO ${to_install}" "INSTALL_CUCO ${to_install}") #NOTE(HIP/AMD): build option INSTALL_HIPCO may be removed in the future.
 
