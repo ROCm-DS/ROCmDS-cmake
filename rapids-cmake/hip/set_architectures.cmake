@@ -84,6 +84,7 @@ function(rapids_hip_set_architectures mode)
 
   if(${mode} STREQUAL "RAPIDS" OR ${mode} STREQUAL "ALL")
     set(CMAKE_HIP_ARCHITECTURES ${supported_archs} PARENT_SCOPE)
+    set(CMAKE_HIP_ARCHITECTURES ${supported_archs})
   elseif(${mode} STREQUAL "NATIVE")
     include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/detail/detect_architectures.cmake)
     rapids_hip_detect_architectures(supported_archs CMAKE_HIP_ARCHITECTURES)
