@@ -122,7 +122,7 @@ The most commonly used functions are:
 - `rapids_cuda_init_architectures(<project_name>)` handles initialization of `CMAKE_CUDA_ARCHITECTURES`. MUST BE CALLED BEFORE `PROJECT()`
   - Synchronizes `CMAKE_HIP_ARCHITECTURES` and variable `CMAKE_CUDA_ARCHITECTURES` if the HIP backend is used.
 - `rapids_cuda_init_runtime(<mode>)` handles initialization of `CMAKE_CUDA_RUNTIME_LIBRARY`.
-- `rapids_cuda_patch_toolkit()` corrects bugs in the CUDAToolkit module that are being upstreamed.
+- `rapids_cuda_enable_fatbin_compression()` handles the optimal compile flags for fatbin compression to make smaller binaries
 
 > ![NOTE]
 > If the HIP backend is used (the default), the above functions will be delegated to the corresponding `rapids-hip` function.
