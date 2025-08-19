@@ -123,14 +123,6 @@ function(rapids_cpm_hipcomp)
     endif()
   endif()
 
-  include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(hipcomp ${version} patch_command build_patch_only)
-
-  # Apply any patch commands to the proprietary binary
-  if(hipcomp_proprietary_binary AND PATCH_COMMAND IN_LIST find_args)
-    execute_process(COMMAND ${patch_command} WORKING_DIRECTORY ${hipcomp_ROOT})
-  endif()
-
   include("${rapids-cmake-dir}/cpm/find.cmake")
 
   set(BUILD_STATIC ON) # default behavior
