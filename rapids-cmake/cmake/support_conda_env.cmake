@@ -26,7 +26,7 @@ to properly support building in CONDA envs.
 
   .. code-block:: cmake
 
-    rapids_cmake_support_conda_env( <target_name> [MODIFY_PREFIX_PATH] )
+    rapids_cmake_support_conda_env( <target_name> [MODIFY_PREFIX_PATH] [KEEP_DEBUG_FLAGS] )
 
 Creates a global interface target called `target_name` that holds
 the CONDA compile options, include directories, and link directories when executed.
@@ -59,6 +59,10 @@ include the following paths based on the current conda environment:
 
     When in a conda environment the contents of `$ENV{CONDA_PREFIX}` will be inserted to
     the front of :cmake:variable:`CMAKE_PREFIX_PATH <cmake:variable:CMAKE_PREFIX_PATH>`.
+
+``KEEP_DEBUG_FLAGS``
+    When in a conda build or conda environment and KEEP_DEBUG_FLAGS is set, the
+    default debug flags will not be changed.
 
 Result Variables
 ^^^^^^^^^^^^^^^^
@@ -130,6 +134,10 @@ function(rapids_cmake_support_conda_env target)
       set(modify_prefix_path TRUE)
     endif()
 
+    if(ARGV2 STREQUAL "KEEP_DEBUG_FLAGS")
+      set(keep_debug_flags TRUE)
+    endif()
+
     add_library(${target} INTERFACE)
 
     if(in_conda_build)
@@ -191,6 +199,9 @@ function(rapids_cmake_support_conda_env target)
     # The conda env will have setup `CXXFLAGS`, etc to contain `-O2` which we need to override to
     # get proper debug information for local variables, etc. Since `target_compile_options` values
     # are appended after `CXXFLAGS` we know that this will properly override the conda `-O2`
-    target_compile_options(${target} INTERFACE "$<$<CONFIG:Debug>:-O0>")
+    if(NOT keep_debug_flags)
+      target_compile_options(${target} INTERFACE "$<$<CONFIG:Debug>:-O0>")
+    endif()
   endif()
 endfunction()
+
