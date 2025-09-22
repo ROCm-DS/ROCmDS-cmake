@@ -92,6 +92,10 @@ function(rapids_hip_set_architectures mode)
     set(CMAKE_HIP_ARCHITECTURES ${CMAKE_HIP_ARCHITECTURES} PARENT_SCOPE)
   endif()
 
+  if(GPU_TARGETS)
+    list(REMOVE_DUPLICATES GPU_TARGETS)
+  endif()
+
   # variables used by HIP CMake package etc.
   if ("${AMDGPU_TARGETS}" STREQUAL "")
     set(AMDGPU_TARGETS "${CMAKE_HIP_ARCHITECTURES}" CACHE STRING "AMD GPU targets to compile for (written by ROCmDS-CMake)")
