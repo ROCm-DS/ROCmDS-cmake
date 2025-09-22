@@ -119,9 +119,9 @@
       "git_tag" : "We-always-use-find_package-for-rocthrust."
     },
     "jitify-hip" : {
-      "version" : "0.0",
+      "version" : "0.1",
       "git_url" : "https://github.com/ROCm/jitify",
-      "git_tag" : "release/0.0.x",
+      "git_tag" : "release/0.1.x",
       "git_shallow": true
     },
     "rocmds_logger": {
