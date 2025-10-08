@@ -88,47 +88,47 @@
       "git_tag": "v${version}"
     },
     "hipco" : {
-      "version" : "0.2.0",
-      "git_url" : "https://github.com/ROCm/hipCollections",
-      "git_tag" : "release/0.2.x"
+      "version" : "0.3.0",
+      "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/hipCollections",
+      "git_tag" : "release/rocmds-25.10"
     },
     "hipmm" : {
-      "version" : "2.0.0",
-      "git_url" : "https://github.com/ROCm-DS/hipMM",
-      "git_tag" : "release/2.0.x"
+      "version" : "3.0.0",
+      "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_DS_ORG}/hipMM",
+      "git_tag" : "release/rocmds-25.10"
     },
     "hipcomp" : {
       "version" : "2.2.0",
-      "git_url" : "https://github.com/ROCm/hipcomp-core",
-      "git_tag" : "release/2.2.x"
+      "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/hipcomp-core",
+      "git_tag" : "release/rocmds-25.10"
     },
     "libhipcxx" : {
-      "version" : "2.2.0",
-      "git_url" : "https://github.com/ROCm/libhipcxx",
-      "git_tag" : "release/2.2.x"
+      "version" : "2.7.0",
+      "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/libhipcxx",
+      "git_tag" : "release/rocmds-25.10"
     },
     "hipbench": {
-      "version": "0.1",
+      "version": "0.2",
       "git_shallow": false,
-      "git_url": "https://github.com/ROCm/hipBench",
-      "git_tag": "release/0.1.x"
+      "git_url": "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/hipBench",
+      "git_tag": "release/rocmds-25.10"
     },
     "rocthrust" : {
       "version" : "4.0.0",
-      "git_url" : "https://github.com/ROCm/rocThrust",
+      "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/rocThrust",
       "git_tag" : "We-always-use-find_package-for-rocthrust."
     },
     "jitify-hip" : {
       "version" : "0.1",
-      "git_url" : "https://github.com/ROCm/jitify",
-      "git_tag" : "release/0.1.x",
+      "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/jitify",
+      "git_tag" : "release/rocmds-25.10",
       "git_shallow": true
     },
     "rocmds_logger": {
       "version": "0.1.0",
       "git_shallow": false,
-      "git_url": "https://github.com/ROCm-DS/ROCmDS-Logger",
-      "git_tag": "release/1.0.x"
+      "git_url": "https://github.com/${RAPIDS_CMAKE_ROCM_DS_ORG}/ROCmDS-Logger",
+      "git_tag": "release/rocmds-25.10"
     }
   }
 }
