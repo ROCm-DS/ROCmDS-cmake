@@ -23,10 +23,6 @@
 
 # ROCm-DS CMake
 
-<!-- NOTE: temporary -->
-> [!CAUTION]
-> This release is an *early-access* software technology preview. Running production workloads is *not* recommended.
-
 <!-- **NOTE:** For the latest stable [README.md](https://github.com/ROCm-DS/ROCmDS-cmake/blob/release/1.0.x/README.md) ensure you are on the default branch. -->
 
 ## Overview
@@ -36,7 +32,7 @@ projects. By sharing the code in a single place it makes rolling out CMake
 fixes easier.
 
 > [!NOTE]
-> This ROCm&trade; port is derived from the NVIDIA RAPIDS&reg; RAPIDS-CMake project (**version 24.06**). It aims to
+> This ROCm&trade; port is derived from the NVIDIA RAPIDS&reg; RAPIDS-CMake project (**version 25.02**). It aims to
 follow the latter's directory structure, file naming and API naming as closely as possible to minimize porting friction for users that are interested in using both projects.
 
 ## Installation
