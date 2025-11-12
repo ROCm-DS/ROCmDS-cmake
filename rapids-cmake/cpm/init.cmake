@@ -105,22 +105,6 @@ in the build tree of the calling project
 function(rapids_cpm_init)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.init")
 
-  if(NOT "$ENV{RAPIDS_CMAKE_ROCM_ORG}" STREQUAL "")
-    set(RAPIDS_CMAKE_ROCM_ORG "$ENV{RAPIDS_CMAKE_ROCM_ORG}" CACHE STRING "ROCm org")
-    message(STATUS "RAPIDS_CMAKE_ROCM_ORG=${RAPIDS_CMAKE_ROCM_ORG}")
-  else()
-    set(RAPIDS_CMAKE_ROCM_ORG ROCm CACHE STRING "ROCm org")
-    message(STATUS "Using default RAPIDS_CMAKE_ROCM_ORG=${RAPIDS_CMAKE_ROCM_ORG}")
-  endif()
-
-  if(NOT "$ENV{RAPIDS_CMAKE_ROCM_DS_ORG}" STREQUAL "")
-    set(RAPIDS_CMAKE_ROCM_DS_ORG "$ENV{RAPIDS_CMAKE_ROCM_DS_ORG}" CACHE STRING "ROCmDS org")
-    message(STATUS "RAPIDS_CMAKE_ROCM_DS_ORG=${RAPIDS_CMAKE_ROCM_DS_ORG}")
-  else()
-    set(RAPIDS_CMAKE_ROCM_DS_ORG ROCm-DS CACHE STRING "ROCmDS org")
-    message(STATUS "Using default RAPIDS_CMAKE_ROCM_DS_ORG=${RAPIDS_CMAKE_ROCM_DS_ORG}")
-  endif()
-
   set(_rapids_options GENERATE_PINNED_VERSIONS)
   set(_rapids_one_value CUSTOM_DEFAULT_VERSION_FILE OVERRIDE)
   set(_rapids_multi_value)

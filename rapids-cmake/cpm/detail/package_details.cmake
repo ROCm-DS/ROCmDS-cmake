@@ -141,6 +141,26 @@ function(rapids_cpm_package_details_internal package_name version_var url_var ta
   # `rapids-cmake-version` and `rapids-cmake-checkout-tag` values
   include("${rapids-cmake-dir}/rapids-version.cmake")
 
+  if(NOT DEFINED rapids-cmake-rocm-org)
+    if(NOT "$ENV{RAPIDS_CMAKE_ROCM_ORG}" STREQUAL "")
+      set(rapids-cmake-rocm-org "$ENV{RAPIDS_CMAKE_ROCM_ORG}")
+      message(STATUS "RAPIDS_CMAKE_ROCM_ORG=${rapids-cmake-rocm-org}")
+    else()
+      set(rapids-cmake-rocm-org ROCm)
+      message(STATUS "Using default RAPIDS_CMAKE_ROCM_ORG=${rapids-cmake-rocm-org}")
+    endif()
+  endif()
+
+  if(NOT DEFINED rapids-cmake-rocm-ds-org)
+    if(NOT "$ENV{RAPIDS_CMAKE_ROCM_DS_ORG}" STREQUAL "")
+      set(rapids-cmake-rocm-ds-org "$ENV{RAPIDS_CMAKE_ROCM_DS_ORG}")
+      message(STATUS "RAPIDS_CMAKE_ROCM_DS_ORG=${rapids-cmake-rocm-ds-org}")
+    else()
+      set(rapids-cmake-rocm-ds-org ROCm-DS)
+      message(STATUS "Using default RAPIDS_CMAKE_ROCM_DS_ORG=${rapids-cmake-rocm-ds-org}")
+    endif()
+  endif()
+
   cmake_language(EVAL CODE "set(version ${version})")
   cmake_language(EVAL CODE "set(git_tag ${git_tag})")
   cmake_language(EVAL CODE "set(git_url ${git_url})")
