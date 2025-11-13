@@ -171,6 +171,12 @@ The most commonly used functions are:
 At times projects or developers will need to verify ``rapids-cmake`` branches. To do this you can set variables that control which repository ``RAPIDS.cmake`` downloads, which should be done like this:
 
 ```cmake
+  # To override the ROCm GitHub organization:
+  set(rapids-cmake-rocm-org "<my_rocm_org>")
+
+  # To override the ROCm-DS GitHub organization:
+  set(rapids-cmake-rocm-ds-org "<my_rocm_ds_org>")
+
   # To set the version that is pulled (this must be set for RAPIDS.cmake to work):
   set(rapids-cmake-version "<version>")
 
