@@ -15,7 +15,7 @@
 #=============================================================================
 # MIT License
 #
-# Modifications Copyright (c) 2023-2024 Advanced Micro Devices, Inc.
+# Modifications Copyright (c) 2023-2025 Advanced Micro Devices, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -109,27 +109,14 @@ function(rapids_cpm_rocthrust)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.rocthrust")
 
   set(options)
-  set(one_value BUILD_EXPORT_SET INSTALL_EXPORT_SET USE_LOCAL PREFER_LOCAL)
+  set(one_value USE_LOCAL PREFER_LOCAL)
   set(multi_value)
   cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
 
-  # Fix up RAPIDS_UNPARSED_ARGUMENTS to have EXPORT_SETS as this is need for rapids_cpm_find
-  if(_RAPIDS_INSTALL_EXPORT_SET)
-    list(APPEND _RAPIDS_UNPARSED_ARGUMENTS INSTALL_EXPORT_SET ${_RAPIDS_INSTALL_EXPORT_SET})
-  endif()
-  if(_RAPIDS_BUILD_EXPORT_SET)
-    list(APPEND _RAPIDS_UNPARSED_ARGUMENTS BUILD_EXPORT_SET ${_RAPIDS_BUILD_EXPORT_SET})
-  endif()
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+  rapids_cpm_package_info(rocthrust ${_RAPIDS_UNPARSED_ARGUMENTS} VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_find_info
+                          TO_INSTALL_VAR to_install)
 
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-  rapids_cpm_package_details(rocthrust version repository tag shallow exclude)
-  set(to_exclude OFF)
-  if(NOT _RAPIDS_INSTALL_EXPORT_SET OR exclude)
-    set(to_exclude ON)
-  endif()
-
-  include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(rocthrust ${version} patch_command)
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
 
@@ -148,13 +135,8 @@ function(rapids_cpm_rocthrust)
   #   set(CPM_LOCAL_PACKAGES_ONLY ON)
   # endif()
 
-  rapids_cpm_find(rocthrust ${version} ${_RAPIDS_UNPARSED_ARGUMENTS}
-                  CPM_ARGS
-                    # FIND_PACKAGE_ARGUMENTS EXACT # we also accept more recent versions
-                    GIT_REPOSITORY ${repository}
-                    GIT_TAG ${tag}
-                    GIT_SHALLOW ${shallow} ${patch_command}
-                    EXCLUDE_FROM_ALL ${to_exclude}
+  rapids_cpm_find(rocthrust ${version} ${find_args}
+                  CPM_ARGS ${cpm_find_info}
                     OPTIONS "DOWNLOAD_ROCPRIM ON")
 
   # if (NOT TARGET roc::rocthrust AND TARGET rocthrust)
