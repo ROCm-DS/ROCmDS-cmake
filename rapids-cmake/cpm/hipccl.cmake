@@ -114,7 +114,7 @@ hipcub; and provides the below interface targets:
    Is a macro by design so that all created variables are available to the caller.
 
 #]=======================================================================]
-macro(_rapids_cpm_hipccl_create_package version exclude_from_all)
+macro(_rapids_cpm_hipccl_create_package version)
   include(${rapids-cmake-dir}/cpm/rocthrust.cmake)
   rapids_cpm_rocthrust(
       BUILD_EXPORT_SET hipccl-exports
@@ -218,9 +218,6 @@ macro(_rapids_cpm_hipccl_create_package version exclude_from_all)
   rapids_cmake_install_lib_dir(lib_dir)
   # NOTE: Not all commands accept generator expressions
   set(install_extra_args "")
-  if (cccl_exclude)
-    set(install_extra_args EXCLUDE_FROM_ALL)
-  endif()
   install(TARGETS ${cccl_targets_to_export} ${hipccl_targets} DESTINATION ${lib_dir}
           EXPORT hipccl-exports
 	  ${install_extra_args})
@@ -295,13 +292,14 @@ function(rapids_cpm_hipccl)
 
   # Get CCCL package info
   # TODO handle cccl_shallow?
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
 
   # NOTE: (1/2) backup value of variables that may be modified as side effect when calling 'rapids_cpm_package_details'
   set(CPM_DOWNLOAD_ALL_BACKUP ${CPM_DOWNLOAD_ALL})
   set(rapids_cmake_always_download_backup ${rapids_cmake_always_download})
 
-  rapids_cpm_package_details("CCCL" cccl_version cccl_repository cccl_tag cccl_shallow cccl_exclude)
+  rapids_cpm_package_info(CCCL ${_RAPIDS_UNPARSED_ARGUMENTS} VERSION_VAR cccl_version FIND_VAR find_args CPM_VAR cpm_find_info
+                          TO_INSTALL_VAR to_install)
 
   # NOTE: (2/2) restore original variable values
   set(CPM_DOWNLOAD_ALL ${CPM_DOWNLOAD_ALL_BACKUP})
@@ -335,7 +333,7 @@ function(rapids_cpm_hipccl)
     message(STATUS "Found preinstalled hipCCL CMake package")
   else()
     message(STATUS "Create hipCCL CMake package and ALIAS targets")
-    _rapids_cpm_hipccl_create_package(${cccl_version} ${cccl_exclude})
+    _rapids_cpm_hipccl_create_package(${cccl_version})
   endif()
 
   # Propagate CCCL related variables to parent scope
