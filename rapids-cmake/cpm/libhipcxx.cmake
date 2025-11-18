@@ -15,7 +15,7 @@
 #=============================================================================
 # MIT License
 #
-# Modifications Copyright (c) 2023-2024 Advanced Micro Devices, Inc.
+# Modifications Copyright (c) 2023-2025 Advanced Micro Devices, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -75,12 +75,11 @@ Result Variables
 function(rapids_cpm_libhipcxx)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.libhipcxx")
 
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-  rapids_cpm_package_details(libhipcxx version repository tag shallow exclude)
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+  rapids_cpm_package_info(libhipcxx ${ARGN} VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_find_info
+                          TO_INSTALL_VAR to_install)
 
-  set(to_install OFF)
-  if(INSTALL_EXPORT_SET IN_LIST ARGN AND NOT exclude)
-    set(to_install ON)
+  if(to_install)
     # By default if we allow libhipcxx to install into `CMAKE_INSTALL_INCLUDEDIR` alongside rmm (or
     # other packages) we will get a install tree that looks like this:
 
@@ -103,26 +102,14 @@ function(rapids_cpm_libhipcxx)
     set(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_LIBDIR}/rapids/")
   endif()
 
-  include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command(libhipcxx ${version} patch_command)
-
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(libhipcxx ${version} ${ARGN}
+  rapids_cpm_find(libhipcxx ${version} ${find_args}
                   GLOBAL_TARGETS libhipcxx::libhipcxx
-                  CPM_ARGS
-                  GIT_REPOSITORY ${repository}
-                  GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow} ${patch_command}
-                  EXCLUDE_FROM_ALL ${exclude}
+                  CPM_ARGS ${cpm_find_info}
                   OPTIONS "libhipcxx_ENABLE_INSTALL_RULES ${to_install}")
 
   include("${rapids-cmake-dir}/cpm/detail/display_patch_status.cmake")
   rapids_cpm_display_patch_status(libhipcxx)
-
-  set(options)
-  set(one_value BUILD_EXPORT_SET INSTALL_EXPORT_SET)
-  set(multi_value)
-  cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
 
   if(libhipcxx_SOURCE_DIR)
     # Store where CMake can find our custom libhipcxx
