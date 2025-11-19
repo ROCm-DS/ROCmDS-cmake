@@ -76,33 +76,13 @@ Result Variables
 function(rapids_cpm_jitify_hip)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.jitify")
 
-  set(options)
-  set(one_value INSTALL_EXPORT_SET)
-  set(multi_value)
-  cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
-
-  # Fix up RAPIDS_UNPARSED_ARGUMENTS to have EXPORT_SETS as this is need for rapids_cpm_find
-  if(_RAPIDS_INSTALL_EXPORT_SET)
-    list(APPEND _RAPIDS_UNPARSED_ARGUMENTS INSTALL_EXPORT_SET ${_RAPIDS_INSTALL_EXPORT_SET})
-  endif()
-
-  include("${rapids-cmake-dir}/cpm/detail/package_details.cmake")
-  rapids_cpm_package_details("jitify-hip" version repository tag shallow exclude)
-  set(to_exclude OFF)
-  if(NOT _RAPIDS_INSTALL_EXPORT_SET OR exclude)
-    set(to_exclude ON)
-  endif()
-
-  include("${rapids-cmake-dir}/cpm/detail/generate_patch_command.cmake")
-  rapids_cpm_generate_patch_command("jitify-hip" ${version} patch_command)
+  include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
+  rapids_cpm_package_info(jitify-hip ${ARGN} VERSION_VAR version FIND_VAR find_args CPM_VAR cpm_find_info
+                          TO_INSTALL_VAR to_install)
 
   include("${rapids-cmake-dir}/cpm/find.cmake")
-  rapids_cpm_find(jitify ${version} ${ARGN} {_RAPIDS_UNPARSED_ARGUMENTS}
-                  CPM_ARGS
-                  GIT_REPOSITORY ${repository}
-                  GIT_TAG ${tag}
-                  GIT_SHALLOW ${shallow} ${patch_command}
-                  EXCLUDE_FROM_ALL ${to_exclude})
+  rapids_cpm_find(jitify ${version} ${find_args}
+                  CPM_ARGS ${cpm_find_info})
 
   include("${rapids-cmake-dir}/cpm/detail/display_patch_status.cmake")
   rapids_cpm_display_patch_status("jitify-hip")
