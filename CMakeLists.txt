@@ -71,7 +71,7 @@ if (RAPIDS_CMAKE_ONLY_CREATE_PACKAGE)
   set(rapids-cmake-dir "${CMAKE_CURRENT_LIST_DIR}/rapids-cmake")
   set(install_prefix share/cmake/rocmds-cmake)
 
-  install(FILES init.cmake DESTINATION ${install_prefix})
+  install(FILES init.cmake VERSION RAPIDS_BRANCH DESTINATION ${install_prefix})
   install(DIRECTORY ${rapids-cmake-dir}/ DESTINATION ${install_prefix}/modules
           PATTERN "rapids-cmake/rapids-cmake.cmake" EXCLUDE)
 
