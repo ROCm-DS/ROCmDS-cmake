@@ -68,62 +68,45 @@ files to be generated.
 function(rapids_test_generate_resource_spec DESTINATION filepath)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.test.generate_resource_spec")
 
-  if(NOT DEFINED CMAKE_CUDA_COMPILER AND NOT DEFINED CMAKE_CXX_COMPILER)
-    message(FATAL_ERROR "rapids_test_generate_resource_spec Requires the CUDA or C++ language to be enabled."
+  unset(rapids_lang)
+  get_property(rapids_languages GLOBAL PROPERTY ENABLED_LANGUAGES)
+  if("CXX" IN_LIST rapids_languages)
+    set(rapids_lang CXX)
+    set(rapids_lang_lower cxx)
+  endif()
+  if("HIP" IN_LIST rapids_languages)
+    set(rapids_lang HIP)
+    set(rapids_lang_lower hip)
+  endif()
+
+  if(NOT rapids_lang)
+    message(FATAL_ERROR "rapids_test_generate_resource_spec Requires the HIP or C++ language to be enabled."
     )
   endif()
 
-  set(gpu_json_contents
-      [=[
-{
-"version": {"major": 1, "minor": 0},
-"local": [{
-  "gpus": [{"id":"0", "slots": 0}]
-}]
-}
-]=])
-
-  # TODO device dependent
   include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/detail/default_names.cmake)
-  set(eval_file ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/detail/generate_resource_spec.cpp)
   set(eval_exe ${PROJECT_BINARY_DIR}/rapids-cmake/${rapids_test_generate_exe_name})
-  set(error_file ${PROJECT_BINARY_DIR}/rapids-cmake/detect_gpus.stderr.log)
 
-  if(NOT EXISTS "${eval_exe}")
-    file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/rapids-cmake/")
+  if(NOT TARGET generate_ctest_json)
     find_package(HIP QUIET)
-    if (HIP_FOUND)
-      if (HIP_PLATFORM STREQUAL "amd")
-        set(compile_options "-I${HIP_INCLUDE_DIRS}" "-DHAVE_HIP" "-D__HIP_PLATFORM_AMD__=1 -D__HIP_PLATFORM_HCC__=1")
-        set(link_options "-L${hip_LIB_INSTALL_DIR} -lamdhip64")
-        set(compiler "${CMAKE_CXX_COMPILER}")
-        if(NOT DEFINED CMAKE_CXX_COMPILER)
-          set(compiler "${CMAKE_HIP_COMPILER}")
-        endif()
-      elseif (HIP_PLATFORM STREQUAL "nvidia")
-        set(compile_options "-I${HIP_INCLUDE_DIRS}" "-DHAVE_HIP" "-D__HIP_PLATFORM_NVIDIA__=1 -D__HIP_PLATFORM_NVCC__=1")
-        find_package(CUDAToolkit QUIET)
-        set(link_options ${CUDA_cudart_LIBRARY})
-        set(compiler "${CMAKE_CXX_COMPILER}")
-        if(NOT DEFINED CMAKE_CXX_COMPILER)
-          set(compiler "${CMAKE_CUDA_COMPILER}")
-        endif()
-      endif()
+
+    add_executable(generate_ctest_json
+                   ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/detail/generate_resource_spec.cpp)
+    if(HIP_FOUND)
+      target_link_libraries(generate_ctest_json PRIVATE hip::host)
+      target_compile_definitions(generate_ctest_json PRIVATE HAVE_HIP)
     endif()
+    set_property(SOURCE ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/detail/generate_resource_spec.cpp
+                 PROPERTY LANGUAGE ${rapids_lang})
+    set_target_properties(generate_ctest_json
+                          PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/rapids-cmake/"
+                                     OUTPUT_NAME ${rapids_test_generate_exe_name})
+    target_compile_features(generate_ctest_json PRIVATE ${rapids_lang_lower}_std_17)
 
-    execute_process(COMMAND "${compiler}" "${eval_file}" ${compile_options} ${link_options} -o
-                            "${eval_exe}" OUTPUT_VARIABLE compile_output
-                    ERROR_VARIABLE compile_output)
-  endif()
-
-  if(NOT EXISTS "${eval_exe}")
-    message(STATUS "rapids_test_generate_resource_spec failed to build detection executable, presuming no GPUs."
-    )
-    message(STATUS "rapids_test_generate_resource_spec compile[${compiler} ${compile_options} ${link_options}] failure details are ${compile_output}"
-    )
-    file(WRITE "${filepath}" "${gpu_json_contents}")
-  else()
-    execute_process(COMMAND ${eval_exe} OUTPUT_FILE "${filepath}")
+    add_test(NAME generate_resource_spec COMMAND generate_ctest_json "${filepath}")
+    set_tests_properties(generate_resource_spec
+                         PROPERTIES FIXTURES_SETUP resource_spec GENERATED_RESOURCE_SPEC_FILE
+                                    "${filepath}")
   endif()
 
 endfunction()
