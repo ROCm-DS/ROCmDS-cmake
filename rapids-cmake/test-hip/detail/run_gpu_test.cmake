@@ -1,5 +1,5 @@
 #=============================================================================
-# Copyright (c) 2022-2023, NVIDIA CORPORATION.
+# Copyright (c) 2022-2025, NVIDIA CORPORATION.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,11 +35,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #=============================================================================
-cmake_minimum_required(VERSION 3.23.1)
+cmake_minimum_required(VERSION 3.30.4)
 
 if(DEFINED ENV{CTEST_RESOURCE_GROUP_COUNT})
+  math(EXPR max_index "$ENV{CTEST_RESOURCE_GROUP_COUNT}-1")
   # cmake-lint: disable=E1120
-  foreach(index RANGE 0 ${CTEST_RESOURCE_GROUP_COUNT})
+  foreach(index RANGE 0 "${max_index}")
     set(allocation $ENV{CTEST_RESOURCE_GROUP_${index}_GPUS})
     if(DEFINED allocation)
       # strings look like "id:value,slots:value" so let's make a super lazy parser by deleting `id:`
@@ -47,7 +48,7 @@ if(DEFINED ENV{CTEST_RESOURCE_GROUP_COUNT})
       string(REPLACE "id:" "" allocation "${allocation}")
       string(REPLACE ",slots:" ";" allocation "${allocation}")
       list(GET allocation 0 device_ids)
-      # slots are the cmake test requirements term for what we call percent. So we can ignore the
+      # slots are the cmake test requirements term for what we call percent, so we can ignore the
       # second item in the list
       set(ENV{HIP_VISIBLE_DEVICES} ${device_ids})
       set(ENV{CUDA_VISIBLE_DEVICES} ${device_ids})
