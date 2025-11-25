@@ -285,7 +285,7 @@ Result Variables
 function(rapids_cpm_hipccl)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.hipccl")
   set(options CPM_ARGS)
-  set(one_value BUILD_EXPORT_SET INSTALL_EXPORT_SET)
+  set(one_value "")
   set(multi_value "")
   # TODO handle GLOBAL_TARGETS
   cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
