@@ -91,7 +91,8 @@
     "hipmm" : {
       "version" : "3.0.0",
       "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_DS_ORG}/hipMM",
-      "git_tag" : "release/rocmds-25.10"
+      "git_tag" : "release/rocmds-25.10",
+      "source_subdir": "cpp"
     },
     "hipcomp" : {
       "version" : "2.2.0",
