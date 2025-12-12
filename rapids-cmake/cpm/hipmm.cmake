@@ -64,6 +64,8 @@ Result Targets
 ^^^^^^^^^^^^^^
 
   rmm::rmm target will be created
+  rmm::rmm_logger target will be created
+  rmm::rmm_logger_impl target will be created
 
 Result Variables
 ^^^^^^^^^^^^^^^^
