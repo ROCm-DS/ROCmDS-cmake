@@ -80,7 +80,7 @@ function(rapids_hip_set_architectures mode)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.hip.set_architectures")
 
   # we limit the ALL=RAPIDS mde to
-  set(supported_archs gfx908 gfx90a gfx942)
+  set(supported_archs gfx908 gfx90a gfx942 gfx950)
 
   if(${mode} STREQUAL "RAPIDS" OR ${mode} STREQUAL "ALL")
     set(CMAKE_HIP_ARCHITECTURES ${supported_archs} PARENT_SCOPE)
