@@ -32,7 +32,7 @@ projects. By sharing the code in a single place it makes rolling out CMake
 fixes easier.
 
 > [!NOTE]
-> This ROCm&trade; port is derived from the NVIDIA RAPIDS&reg; RAPIDS-CMake project (**version 25.02**). It aims to
+> This ROCm&trade; port is derived from the NVIDIA RAPIDS&reg; RAPIDS-CMake project (**version 25.10**). It aims to
 follow the latter's directory structure, file naming and API naming as closely as possible to minimize porting friction for users that are interested in using both projects.
 
 ## Installation
