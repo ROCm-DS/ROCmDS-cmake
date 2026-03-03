@@ -84,31 +84,31 @@
       "git_tag": "27cb4c76708608465c413f6d0e6b8d99a4d84302"
     },
     "hipco" : {
-      "version" : "0.3.0",
+      "version" : "0.4.0",
       "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/hipCollections",
-      "git_tag" : "release/rocmds-25.10"
+      "git_tag" : "release/rocmds-26.03"
     },
     "hipmm" : {
-      "version" : "3.0.0",
+      "version" : "4.0.0",
       "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_DS_ORG}/hipMM",
-      "git_tag" : "release/rocmds-25.10",
+      "git_tag" : "release/rocmds-26.03",
       "source_subdir": "cpp"
     },
     "hipcomp" : {
-      "version" : "2.2.0",
+      "version" : "2.3.0",
       "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/hipcomp-core",
-      "git_tag" : "release/rocmds-25.10"
+      "git_tag" : "release/rocmds-26.03"
     },
     "libhipcxx" : {
-      "version" : "2.7.0",
+      "version" : "3.0.2",
       "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/libhipcxx",
-      "git_tag" : "release/rocmds-25.10"
+      "git_tag" : "release/rocmds-26.03"
     },
     "hipbench": {
-      "version": "0.2",
+      "version": "0.3.0",
       "git_shallow": false,
       "git_url": "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/hipBench",
-      "git_tag": "release/rocmds-25.10"
+      "git_tag": "release/rocmds-26.03"
     },
     "rocthrust" : {
       "version" : "4.0.0",
@@ -116,16 +116,16 @@
       "git_tag" : "We-always-use-find_package-for-rocthrust."
     },
     "jitify-hip" : {
-      "version" : "0.1",
+      "version" : "0.2.0",
       "git_url" : "https://github.com/${RAPIDS_CMAKE_ROCM_ORG}/jitify",
-      "git_tag" : "release/rocmds-25.10",
+      "git_tag" : "release/rocmds-26.03",
       "git_shallow": true
     },
     "rocmds_logger": {
       "version": "1.0.0",
       "git_shallow": false,
       "git_url": "https://github.com/${RAPIDS_CMAKE_ROCM_DS_ORG}/ROCmDS-Logger",
-      "git_tag": "release/rocmds-25.10"
+      "git_tag": "release/rocmds-26.03"
     }
   }
 }
