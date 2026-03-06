@@ -86,29 +86,29 @@
     "hipco" : {
       "version" : "0.4.0",
       "git_url" : "https://github.com/${rapids-cmake-rocm-org}/hipCollections",
-      "git_tag" : "release/rocmds-26.03"
+      "git_tag" : "amd-integration"
     },
     "hipmm" : {
       "version" : "4.0.0",
       "git_url" : "https://github.com/${rapids-cmake-rocm-ds-org}/hipMM",
-      "git_tag" : "release/rocmds-26.03",
+      "git_tag" : "amd-integration",
       "source_subdir": "cpp"
     },
     "hipcomp" : {
       "version" : "2.3.0",
       "git_url" : "https://github.com/${rapids-cmake-rocm-org}/hipcomp-core",
-      "git_tag" : "release/rocmds-26.03"
+      "git_tag" : "amd-integration"
     },
     "libhipcxx" : {
       "version" : "3.0.2",
       "git_url" : "https://github.com/${rapids-cmake-rocm-org}/libhipcxx",
-      "git_tag" : "release/rocmds-26.03"
+      "git_tag" : "amd-integration"
     },
     "hipbench": {
       "version": "0.3.0",
       "git_shallow": false,
       "git_url": "https://github.com/${rapids-cmake-rocm-org}/hipBench",
-      "git_tag": "release/rocmds-26.03"
+      "git_tag": "amd-integration"
     },
     "rocthrust" : {
       "version" : "4.0.0",
@@ -118,14 +118,14 @@
     "jitify-hip" : {
       "version" : "0.2.0",
       "git_url" : "https://github.com/${rapids-cmake-rocm-org}/jitify",
-      "git_tag" : "release/rocmds-26.03",
+      "git_tag" : "amd-integration",
       "git_shallow": true
     },
     "rocmds_logger": {
       "version": "1.0.0",
       "git_shallow": false,
       "git_url": "https://github.com/${rapids-cmake-rocm-ds-org}/ROCmDS-Logger",
-      "git_tag": "release/rocmds-26.03"
+      "git_tag": "amd-integration"
     }
   }
 }
