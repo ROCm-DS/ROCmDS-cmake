@@ -93,7 +93,7 @@ function(rapids_cpm_hipcomp)
   list(APPEND CMAKE_MESSAGE_CONTEXT "rapids.cpm.hipcomp")
 
   set(options)
-  set(one_value USE_PROPRIETARY_BINARY)
+  set(one_value USE_PROPRIETARY_BINARY BUILD_STATIC)
   set(multi_value)
   cmake_parse_arguments(_RAPIDS "${options}" "${one_value}" "${multi_value}" ${ARGN})
 
