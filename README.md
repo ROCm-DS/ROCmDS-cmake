@@ -23,7 +23,7 @@
 
 # ROCm-DS CMake
 
-<!-- **NOTE:** For the latest stable [README.md](https://github.com/ROCm-DS/ROCmDS-cmake/blob/release/1.0.x/README.md) ensure you are on the default branch. -->
+<!-- **NOTE:** For the latest stable [README.md](https://github.com/ROCm-DS/ROCmDS-cmake/blob/release/rocmds-26.03/README.md) ensure you are on the default branch. -->
 
 ## Overview
 
@@ -45,7 +45,7 @@ Content](https://cmake.org/cmake/help/latest/module/FetchContent.html) into your
 cmake_minimum_required(...)
 
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
-  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-CMake/release/<VERSION_MAJOR>.<VERSION_MINOR>.x/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-CMake/release/rocmds-26.03/RAPIDS.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
 endif()
 include(${CMAKE_CURRENT_BINARY_DIR}/<PROJECT>_RAPIDS.cmake)
@@ -221,4 +221,4 @@ A few notes:
 
 <!-- ## Contributing
 
-Review the [CONTRIBUTING.md](https://github.com/ROCm-DS/ROCmDS-CMake/blob/release/1.0.x/CONTRIBUTING.md) file for information on how to contribute code and issues to the project. -->
+Review the [CONTRIBUTING.md](https://github.com/ROCm-DS/ROCmDS-CMake/blob/release/rocmds-26.03/CONTRIBUTING.md) file for information on how to contribute code and issues to the project. -->

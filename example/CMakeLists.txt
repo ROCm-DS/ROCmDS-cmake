@@ -44,7 +44,7 @@ set(HIP_AS_CUDA TRUE) #: NOTE(HIP/AMD): not really required, TRUE is actually th
 cmake_minimum_required(VERSION 3.30.4 FATAL_ERROR)
 
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/EXAMPLE_RAPIDS.cmake)
-  file(DOWNLOAD https://raw.githubusercontent.com/ROCm/rapids-cmake/branch-24.06/RAPIDS.cmake
+  file(DOWNLOAD https://raw.githubusercontent.com/ROCm-DS/ROCmDS-CMake/release/rocmds-26.03/RAPIDS.cmake
        ${CMAKE_CURRENT_BINARY_DIR}/EXAMPLE_RAPIDS.cmake)
 endif()
 include(${CMAKE_CURRENT_BINARY_DIR}/EXAMPLE_RAPIDS.cmake)
